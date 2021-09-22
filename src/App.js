@@ -1,24 +1,30 @@
 import React from 'react';
-import {ChatEngine} from 'react-chat-engine';
-import ChatFeed from './components/ChatFeed';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom'
+import Chats from './components/Chats';
 import LoginForm from './components/LoginForm';
+import RegistrationForm from './components/RegistrationForm';
 
 const App = () => {
-    // conditional statement to retrieve messages on login
-    if (!localStorage.getItem('username')) return <LoginForm></LoginForm>
-
     return (
         <div>
-            <ChatEngine
-            height='100vh'
-            projectID="07b488b1-b00e-42ca-88a1-52ffe93814aa"
-            userName={localStorage.getItem('username')}
-            userSecret={localStorage.getItem('password')}
-            // sending chatAppProps into ChatFeed component
-            renderChatFeed={(chatAppProps) => <ChatFeed {...chatAppProps}></ChatFeed>}></ChatEngine>
+            <Router>
+                <Switch>
+                    <Route path='/' exact component ={LoginForm}></Route>
+                    <Route path='/chats' exact component={Chats}></Route>
+                    <Route path='/Register' exact component={RegistrationForm}></Route>
+                    <Route>
+                        <div>
+                            <h1 align='center'> There is nothing here</h1>
+                            <div align="center">
+                                <button type='submit' className='button'>
+                                    <Link to='/'><span> Login</span></Link>
+                                </button>
+                        </div>
+                        </div>  </Route>
+                </Switch>
+            </Router>
         </div>
     )
 }
 
-export default App;
+export default App
